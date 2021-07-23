@@ -80,7 +80,13 @@ class _FavMyState extends State<FavMy> {
                         tts.speak(data.message); // Text-to-speech
                       },
                       trailing: IconButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          var delete = data.message;
+                          
+                          //prepare data
+                           Saved favor = Saved(message: delete);
+
+                        },
                         icon: const Icon(
                           Icons.delete_forever,
                           color: Colors.white,

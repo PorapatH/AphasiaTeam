@@ -29,9 +29,13 @@ class FavProvider with ChangeNotifier {
 
     //pull data
     fav = await db.loadAlldata();
-    //fav.insert(0, favor);
 
     //แจ้งเตือน consumer
     notifyListeners();
+  }
+
+  void delete(Saved favor){
+    //var db = FavDB(dbName: "data.db");
+
   }
 }
