@@ -16,6 +16,7 @@ class FavProvider with ChangeNotifier {
 
   void initData() async {
     var db = FavDB(dbName: "data.db");
+
     fav = await db.loadAlldata();
     notifyListeners();
   }
