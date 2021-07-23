@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_tts/flutter_tts.dart';
 import 'package:intern/Favorite.dart';
 import 'package:intern/Help.dart';
 import 'package:intern/Home.dart';
@@ -6,7 +7,19 @@ import 'package:intern/models/Saved.dart';
 import 'package:intern/provider/provider.dart';
 import 'package:provider/provider.dart';
 
-class FavMy extends StatelessWidget {
+class FavMy extends StatefulWidget{
+  @override
+  _FavMyState createState() => _FavMyState();
+}
+class _FavMyState extends State<FavMy> {
+
+  void initState(){
+    super.initState();
+    Provider.of<FavProvider>(context, listen: false).initData();
+  }
+
+  final FlutterTts tts = FlutterTts();
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -64,7 +77,7 @@ class FavMy extends StatelessWidget {
                           vertical: 16.0, horizontal: 16.0),
                       dense: true,
                       onTap: () {
-                        // Text-to-speech
+                        tts.speak(data.message); // Text-to-speech
                       },
                       trailing: IconButton(
                         onPressed: () {},
