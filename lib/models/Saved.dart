@@ -1,5 +1,5 @@
 class Saved {
   String message;
 
-  Saved({required this.message});
+  Saved({this.message});
 }

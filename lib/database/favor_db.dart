@@ -11,7 +11,7 @@ class FavDB {
 
   String dbName; //Name of db
 
-  FavDB({required this.dbName});
+  FavDB({this.dbName});
 
   Future<Database> openDatabase() async {
     //find location that store the data
