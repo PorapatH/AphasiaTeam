@@ -34,8 +34,4 @@ class FavProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  void delete(Saved favor){
-    //var db = FavDB(dbName: "data.db");
-
-  }
 }

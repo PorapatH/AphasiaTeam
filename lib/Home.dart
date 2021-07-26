@@ -3,7 +3,7 @@ import 'package:flutter_tts/flutter_tts.dart';
 import 'package:intern/Favorite.dart';
 import 'package:intern/Feel.dart';
 import 'package:intern/Help.dart';
-import 'package:intern/Want.dart';
+import 'package:intern/screens/iwant.dart';
 import 'package:intern/models/Saved.dart';
 import 'package:intern/provider/provider.dart';
 import 'package:provider/provider.dart';
@@ -116,7 +116,7 @@ class Home extends StatelessWidget {
                   onTap: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => Want()),
+                      MaterialPageRoute(builder: (context) => Iwant()),
                     );
                   },
                   child: Card(

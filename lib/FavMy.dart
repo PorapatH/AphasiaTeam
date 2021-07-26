@@ -81,11 +81,8 @@ class _FavMyState extends State<FavMy> {
                       },
                       trailing: IconButton(
                         onPressed: () {
-                          var delete = data.message;
-                          
-                          //prepare data
-                           Saved favor = Saved(message: delete);
-
+                         //var text = data.message;
+                        //text;
                         },
                         icon: const Icon(
                           Icons.delete_forever,
