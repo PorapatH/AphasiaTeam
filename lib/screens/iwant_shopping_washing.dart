@@ -200,7 +200,13 @@ class _WantShoppingWashingState extends State<WantShoppingWashing>{
 ///
 ///
 ///
-class IwashoppingWashingTts extends StatelessWidget {
+class IwashoppingWashingTts extends StatefulWidget {
+  @override
+  _IwashoppingWashingTtsState createState() => _IwashoppingWashingTtsState();
+}
+
+class _IwashoppingWashingTtsState extends State<IwashoppingWashingTts> {
+  bool isfav = false;
   @override
   Widget build(BuildContext context) {
     final FlutterTts tts = FlutterTts();
@@ -311,31 +317,42 @@ class IwashoppingWashingTts extends StatelessWidget {
                   children: <Widget>[
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        primary: Colors.yellowAccent[700],
+                        primary: isfav ? Colors.grey : Colors.yellowAccent[700],
                         onPrimary: Colors.white,
                         padding:
-                            EdgeInsets.symmetric(horizontal: 30, vertical: 20),
+                        EdgeInsets.symmetric(horizontal: 30, vertical: 20),
                         textStyle: TextStyle(fontSize: 20),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12),
                         ),
                       ),
-                      child: Text(
-                        'เพิ่มในรายการโปรด',
-                        style: TextStyle(
-                          fontSize: 20,
-                        ),
-                      ),
+                     child: isfav ? Text("นำออกจากรายการโปรด", style: TextStyle(fontSize: 20,),) : Text("เพิ่มในรายการโปรด", style: TextStyle(fontSize: 20,),),
                       onPressed: () {
-                        var img = args.washing_pic;
-                        var message = 'ฉันต้องการซื้อ' + args.washing;
+                        setState(() {
+                          isfav = !isfav;
+                        },);
+                        if (isfav == true) {
+                          var img = args.washing_pic;
+                          var message = 'ฉันต้องการซื้อ' + args.washing;
 
-                        //เตรียมข้อมูล
-                        WantSaved favor = WantSaved(image: img, message: message);
+                          //เตรียมข้อมูล
+                          WantSaved favor = WantSaved(image: img, message: message);
 
-                        //เรียก provider
-                        var provider = Provider.of<WantFavProvider>(context,listen: false);
-                        provider.addFavorite(favor);
+                          //เรียก provider
+                          var provider = Provider.of<WantFavProvider>(context,listen: false);
+                          provider.addFavorite(favor);
+                        } else {
+                          var deleteImg = args.washing_pic;
+                          var delete = 'ฉันต้องการซื้อ' + args.washing;
+
+                          //prepare data
+                          WantSaved favor = WantSaved(image: deleteImg,message: delete);
+
+                          var provider = Provider.of<WantFavProvider>(context,listen: false);
+                          provider.delete(favor);
+
+                          print("deleted");
+                        }
                       },
                     ),
                   ],

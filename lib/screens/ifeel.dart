@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_tts/flutter_tts.dart';
 import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_tts/flutter_tts.dart';
 import 'package:intern/models/FeelSaved.dart';
 import 'package:intern/models/ifeel_model.dart';
 import 'package:intern/Favorite.dart';
@@ -20,7 +20,7 @@ class Ifeel extends StatefulWidget {
 
 class _IfeelState extends State<Ifeel> {
   //Field
-  List<IfeelModel> ifeelModels = List();
+  List<IfeelModel> ifeelModels = [];
 
   //Method
   @override
@@ -83,8 +83,9 @@ class _IfeelState extends State<Ifeel> {
       child: Padding(
         padding: const EdgeInsets.only(top: 12, bottom: 12),
         child: Row(
-        children: [picadj != null ? Image.network(picadj) : Container()],
-      ),)
+          children: [picadj != null ? Image.network(picadj) : Container()],
+        ),
+      ),
     );
   }
 
@@ -235,17 +236,23 @@ class _IfeelState extends State<Ifeel> {
 ///
 ///
 ///
+class IfeelTts extends StatefulWidget {
+  @override
+  _IfeelTtsState createState() => _IfeelTtsState();
+}
+class _IfeelTtsState extends State<IfeelTts> {
+  bool isfav = false;
 
-class IfeelTts extends StatelessWidget {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     final FlutterTts tts = FlutterTts();
-
-    final args =
-        ModalRoute.of(context).settings.arguments as IfeelModel;
-
-    String adj = args.adjective;
-    String adjpic = args.adjpic;
+    final args = ModalRoute.of(context).settings.arguments as IfeelModel;
 
     return MaterialApp(
       home: Scaffold(
@@ -350,7 +357,7 @@ class IfeelTts extends StatelessWidget {
                   children: <Widget>[
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        primary: Colors.yellowAccent[700],
+                        primary: isfav ? Colors.grey : Colors.yellowAccent[700],
                         onPrimary: Colors.white,
                         padding:
                             EdgeInsets.symmetric(horizontal: 30, vertical: 20),
@@ -359,22 +366,35 @@ class IfeelTts extends StatelessWidget {
                           borderRadius: BorderRadius.circular(12),
                         ),
                       ),
-                      child: Text(
-                        'เพิ่มในรายการโปรด',
-                        style: TextStyle(
-                          fontSize: 20,
-                        ),
-                      ),
+                      child: isfav ? Text("นำออกจากรายการโปรด", style: TextStyle(fontSize: 20,),) : Text("เพิ่มในรายการโปรด", style: TextStyle(fontSize: 20,),),
                       onPressed: () {
-                        var img = args.adjpic;
-                        var message = 'ฉันรู้สึก' + args.adjective;
+                        setState(() {
+                          isfav = !isfav;
+                        },);
+                        if (isfav == true) {
+                          var img = args.adjpic;
+                          var message = 'ฉันรู้สึก' + args.adjective;
 
-                        //เตรียมข้อมูล
-                        FeelSaved favor = FeelSaved(image: img, message: message);
+                          //เตรียมข้อมูล
+                          FeelSaved favor = FeelSaved(image: img, message: message);
 
-                        //เรียก provider
-                        var provider = Provider.of<FeelFavProvider>(context,listen: false);
-                        provider.addFavorite(favor);
+                          //เรียก provider
+                          var provider = Provider.of<FeelFavProvider>(context,listen: false);
+                          provider.addFavorite(favor);
+
+                          print("saved");
+                        } else {
+                          var deleteImg = args.adjpic;
+                          var delete = 'ฉันรู้สึก' + args.adjective;
+
+                          //prepare data
+                          FeelSaved favor = FeelSaved(image: deleteImg,message: delete);
+
+                          var provider = Provider.of<FeelFavProvider>(context,listen: false);
+                          provider.delete(favor);
+
+                          print("deleted");
+                        }
                       },
                     ),
                   ],

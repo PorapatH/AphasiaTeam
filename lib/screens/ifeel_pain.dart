@@ -207,15 +207,18 @@ class _IfpainState extends State<Ifpain> {
 ///
 ///
 
-class IfpainTts extends StatelessWidget {
+class IfpainTts extends StatefulWidget {
+  @override
+  _IfpainTtsState createState() => _IfpainTtsState();
+}
+class _IfpainTtsState extends State<IfpainTts> {
+  bool isfav = false;
+
   @override
   Widget build(BuildContext context) {
     final FlutterTts tts = FlutterTts();
-
     final args =
         ModalRoute.of(context).settings.arguments as IfeelModel;
-
-
 
     return MaterialApp(
       home: Scaffold(
@@ -320,7 +323,7 @@ class IfpainTts extends StatelessWidget {
                   children: <Widget>[
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        primary: Colors.yellowAccent[700],
+                        primary: isfav ? Colors.grey : Colors.yellowAccent[700],
                         onPrimary: Colors.white,
                         padding:
                             EdgeInsets.symmetric(horizontal: 30, vertical: 20),
@@ -329,22 +332,35 @@ class IfpainTts extends StatelessWidget {
                           borderRadius: BorderRadius.circular(12),
                         ),
                       ),
-                      child: Text(
-                        'เพิ่มในรายการโปรด',
-                        style: TextStyle(
-                          fontSize: 20,
-                        ),
-                      ),
+                      child: isfav ? Text("นำออกจากรายการโปรด", style: TextStyle(fontSize: 20,),) : Text("เพิ่มในรายการโปรด", style: TextStyle(fontSize: 20,),),
                       onPressed: () {
-                        var img = args.painpic;
-                        var message = 'ฉันรู้สึกปวด' + args.pain;
+                        setState(() {
+                          isfav = !isfav;
+                        },);
+                        if (isfav == true) {
+                          var img = args.painpic;
+                          var message = 'ฉันรู้สึกปวด' + args.pain;
 
-                        //เตรียมข้อมูล
-                        FeelSaved favor = FeelSaved(image: img, message: message);
+                          //เตรียมข้อมูล
+                          FeelSaved favor = FeelSaved(
+                              image: img, message: message);
 
-                        //เรียก provider
-                        var provider = Provider.of<FeelFavProvider>(context,listen: false);
-                        provider.addFavorite(favor);
+                          //เรียก provider
+                          var provider = Provider.of<FeelFavProvider>(
+                              context, listen: false);
+                          provider.addFavorite(favor);
+                        } else {
+                          var deleteImg = args.painpic;
+                          var delete = 'ฉันรู้สึกปวด' + args.pain;
+
+                          //prepare data
+                          FeelSaved favor = FeelSaved(image: deleteImg,message: delete);
+
+                          var provider = Provider.of<FeelFavProvider>(context,listen: false);
+                          provider.delete(favor);
+
+                          print("deleted");
+                        }
                       },
                     ),
                   ],

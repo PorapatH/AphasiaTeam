@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:intern/models/WantSaved.dart';
 import 'package:intern/models/iwant_model.dart';
 import 'package:intern/Favorite.dart';
 import 'package:intern/Help.dart';
 import 'package:intern/Home.dart';
+import 'package:intern/provider/WantProvider.dart';
 import 'package:intern/screens/iwant_drink.dart';
 import 'package:intern/screens/iwant_eat.dart';
 import 'package:intern/screens/iwant_go.dart';
@@ -13,6 +15,7 @@ import 'package:intern/screens/iwant_listento.dart';
 import 'package:intern/screens/iwant_read.dart';
 import 'package:intern/screens/iwant_shopping.dart';
 import 'package:intern/screens/iwant_watch.dart';
+import 'package:provider/provider.dart';
 
 class Iwant extends StatefulWidget {
   const Iwant({Key key}) : super(key: key);
@@ -280,12 +283,20 @@ class _IwantState extends State<Iwant> {
 ///
 ///
 
-class IwantTts extends StatelessWidget {
+class IwantTts extends StatefulWidget {
+  @override
+  _IwantTtsState createState() => _IwantTtsState();
+}
+
+class _IwantTtsState extends State<IwantTts> {
+  bool isfav = false;
+
   @override
   Widget build(BuildContext context) {
     final FlutterTts tts = FlutterTts();
 
-    final args = ModalRoute.of(context).settings.arguments as IwantModel;
+    final args =
+        ModalRoute.of(context).settings.arguments as IwantModel;
 
     return MaterialApp(
       home: Scaffold(
@@ -335,7 +346,8 @@ class IwantTts extends StatelessWidget {
                   children: <Widget>[
                     ClipRRect(
                       borderRadius: BorderRadius.circular(15.0),
-                      child: Image.network(args.v2pic, width: 300, height: 300),
+                      child: Image.network(args.v2pic,
+                          width: 300, height: 300),
                     ),
                   ],
                 ),
@@ -375,9 +387,7 @@ class IwantTts extends StatelessWidget {
                         ),
                       ),
                       onPressed: () {
-                        tts.speak(
-                          'ฉันต้องการ' + args.verb2,
-                        );
+                        tts.speak('ฉันต้องการ' + args.verb2);
                       },
                     ),
                   ],
@@ -391,22 +401,43 @@ class IwantTts extends StatelessWidget {
                   children: <Widget>[
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        primary: Colors.yellowAccent[700],
+                        primary: isfav ? Colors.grey : Colors.yellowAccent[700],
                         onPrimary: Colors.white,
                         padding:
-                            EdgeInsets.symmetric(horizontal: 30, vertical: 20),
+                        EdgeInsets.symmetric(horizontal: 30, vertical: 20),
                         textStyle: TextStyle(fontSize: 20),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12),
                         ),
                       ),
-                      child: Text(
-                        'เพิ่มในรายการโปรด',
-                        style: TextStyle(
-                          fontSize: 20,
-                        ),
-                      ),
-                      onPressed: () {},
+                      child: isfav ? Text("นำออกจากรายการโปรด", style: TextStyle(fontSize: 20,),) : Text("เพิ่มในรายการโปรด", style: TextStyle(fontSize: 20,),),
+                      onPressed: () {
+                        setState(() {
+                          isfav = !isfav;
+                        },);
+                        if (isfav == true) {
+                          var img = args.v2pic;
+                          var message = 'ฉันต้องการ' + args.verb2;
+
+                          //เตรียมข้อมูล
+                          WantSaved favor = WantSaved(image: img, message: message);
+
+                          //เรียก provider
+                          var provider = Provider.of<WantFavProvider>(context,listen: false);
+                          provider.addFavorite(favor);
+                        } else {
+                          var deleteImg = args.v2pic;
+                          var delete = 'ฉันต้องการ' + args.verb2;
+
+                          //prepare data
+                          WantSaved favor = WantSaved(image: deleteImg,message: delete);
+
+                          var provider = Provider.of<WantFavProvider>(context,listen: false);
+                          provider.delete(favor);
+
+                          print("deleted");
+                        }
+                      },
                     ),
                   ],
                 ),

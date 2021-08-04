@@ -198,7 +198,13 @@ class _WantReadState extends State<WantRead> {
 ///
 ///
 ///
-class IwantTts extends StatelessWidget {
+class IwantTts extends StatefulWidget {
+  @override
+  _IwantTtsState createState() => _IwantTtsState();
+}
+class _IwantTtsState extends State<IwantTts> {
+  bool isfav = false;
+
   @override
   Widget build(BuildContext context) {
     final FlutterTts tts = FlutterTts();
@@ -218,7 +224,7 @@ class IwantTts extends StatelessWidget {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => WantRead()),
+                MaterialPageRoute(builder: (context) => Iwant()),
               );
             },
           ),
@@ -309,31 +315,42 @@ class IwantTts extends StatelessWidget {
                   children: <Widget>[
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        primary: Colors.yellowAccent[700],
+                        primary: isfav ? Colors.grey : Colors.yellowAccent[700],
                         onPrimary: Colors.white,
                         padding:
-                            EdgeInsets.symmetric(horizontal: 30, vertical: 20),
+                        EdgeInsets.symmetric(horizontal: 30, vertical: 20),
                         textStyle: TextStyle(fontSize: 20),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12),
                         ),
                       ),
-                      child: Text(
-                        'เพิ่มในรายการโปรด',
-                        style: TextStyle(
-                          fontSize: 20,
-                        ),
-                      ),
+                      child: isfav ? Text("นำออกจากรายการโปรด", style: TextStyle(fontSize: 20,),) : Text("เพิ่มในรายการโปรด", style: TextStyle(fontSize: 20,),),
                       onPressed: () {
-                        var img = args.readObj_pic;
-                        var message = 'ฉันต้องการอ่าน'+args.readObj;
+                        setState(() {
+                          isfav = !isfav;
+                        },);
+                        if (isfav == true) {
+                          var img = args.readObj_pic;
+                          var message = 'ฉันต้องการอ่าน'+args.readObj;
 
-                        //เตรียมข้อมูล
-                        WantSaved favor = WantSaved(image: img, message: message);
+                          //เตรียมข้อมูล
+                          WantSaved favor = WantSaved(image: img, message: message);
 
-                        //เรียก provider
-                        var provider = Provider.of<WantFavProvider>(context,listen: false);
-                        provider.addFavorite(favor);
+                          //เรียก provider
+                          var provider = Provider.of<WantFavProvider>(context,listen: false);
+                          provider.addFavorite(favor);
+                        } else {
+                          var deleteImg = args.readObj_pic;
+                          var delete = 'ฉันต้องการอ่าน'+args.readObj;
+
+                          //prepare data
+                          WantSaved favor = WantSaved(image: deleteImg,message: delete);
+
+                          var provider = Provider.of<WantFavProvider>(context,listen: false);
+                          provider.delete(favor);
+
+                          print("deleted");
+                        }
                       },
                     ),
                   ],
