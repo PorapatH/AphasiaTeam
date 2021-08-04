@@ -216,108 +216,111 @@ class _IwantTtsState extends State<IwantTts> {
     final args =
         ModalRoute.of(context).settings.arguments as IwantModel;
 
-    return MaterialApp(
-      home: Scaffold(
-        appBar: new AppBar(
-          iconTheme: IconThemeData(color: Colors.white),
-          leading: IconButton(
-            icon: const Icon(
-              Icons.arrow_back,
-              color: Colors.black,
-            ),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => Iwant()),
-              );
-            },
-          ),
-          title: const Text('Aphasia', style: TextStyle(color: Colors.black)),
-          actions: <Widget>[
-            CircleAvatar(
-              radius: 30,
-              backgroundColor: Colors.red[900],
-              child: IconButton(
-                icon: const Icon(
-                  Icons.warning_rounded,
-                  color: Colors.white,
-                ),
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => Help()),
-                  );
-                },
+    String pic = args.salads_pic;
+
+    if (pic != null) {
+      return MaterialApp(
+        home: Scaffold(
+          appBar: new AppBar(
+            iconTheme: IconThemeData(color: Colors.white),
+            leading: IconButton(
+              icon: const Icon(
+                Icons.arrow_back,
+                color: Colors.black,
               ),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => Iwant()),
+                );
+              },
             ),
-          ],
-          backgroundColor: Colors.white,
-        ),
-        body: SingleChildScrollView(
-          padding: EdgeInsets.only(left: 20, right: 20, top: 40, bottom: 20),
-          child: Center(
-            child: Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(15.0),
-                      child: Image.network(args.salads_pic,
-                          width: 300, height: 300),
-                    ),
-                  ],
+            title: const Text('Aphasia', style: TextStyle(color: Colors.black)),
+            actions: <Widget>[
+              CircleAvatar(
+                radius: 30,
+                backgroundColor: Colors.red[900],
+                child: IconButton(
+                  icon: const Icon(
+                    Icons.warning_rounded,
+                    color: Colors.white,
+                  ),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => Help()),
+                    );
+                  },
                 ),
-                SizedBox(
-                  height: 20,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    Text('ฉันต้องการกิน' + args.salads_foods,
-                        style: TextStyle(fontSize: 25, color: Colors.black)),
-                  ],
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        primary: Colors.teal[900],
-                        onPrimary: Colors.white,
-                        padding:
-                            EdgeInsets.symmetric(horizontal: 30, vertical: 20),
-                        textStyle: TextStyle(fontSize: 20),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
+              ),
+            ],
+            backgroundColor: Colors.white,
+          ),
+          body: SingleChildScrollView(
+            padding: EdgeInsets.only(left: 20, right: 20, top: 40, bottom: 20),
+            child: Center(
+              child: Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(15.0),
+                        child: Image.network(args.salads_pic,
+                            width: 300, height: 300),
                       ),
-                      child: Text(
-                        'อ่าน',
-                        style: TextStyle(
-                          fontSize: 20,
+                    ],
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      Text('ฉันต้องการกิน' + args.salads_foods,
+                          style: TextStyle(fontSize: 25, color: Colors.black)),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          primary: Colors.teal[900],
+                          onPrimary: Colors.white,
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 30, vertical: 20),
+                          textStyle: TextStyle(fontSize: 20),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
                         ),
+                        child: Text(
+                          'อ่าน',
+                          style: TextStyle(
+                            fontSize: 20,
+                          ),
+                        ),
+                        onPressed: () {
+                          tts.speak('ฉันต้องการกิน' + args.salads_foods);
+                        },
                       ),
-                      onPressed: () {
-                        tts.speak('ฉันต้องการกิน' + args.salads_foods);
-                      },
-                    ),
-                  ],
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    ElevatedButton(
+                    ],
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      ElevatedButton(
                       style: ElevatedButton.styleFrom(
                         primary: isfav ? Colors.grey : Colors.yellowAccent[700],
                         onPrimary: Colors.white,
@@ -363,40 +366,226 @@ class _IwantTtsState extends State<IwantTts> {
             ),
           ),
         ),
-        bottomNavigationBar: BottomAppBar(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.all(15.0),
-                child: TextButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => Home()),
-                    );
-                  },
-                  child: Text('เมนูหลัก',
-                      style: TextStyle(color: Colors.black, fontSize: 20)),
+          bottomNavigationBar: BottomAppBar(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.all(15.0),
+                  child: TextButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => Home()),
+                      );
+                    },
+                    child: Text('เมนูหลัก',
+                        style: TextStyle(color: Colors.black, fontSize: 20)),
+                  ),
                 ),
+                Padding(
+                  padding: const EdgeInsets.all(15.0),
+                  child: TextButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => Favorite()),
+                      );
+                    },
+                    child: Text('รายการโปรด',
+                        style: TextStyle(color: Colors.black, fontSize: 20)),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      );
+    } else if (pic == null) {
+      return MaterialApp(
+        home: Scaffold(
+          appBar: new AppBar(
+            iconTheme: IconThemeData(color: Colors.white),
+            leading: IconButton(
+              icon: const Icon(
+                Icons.arrow_back,
+                color: Colors.black,
               ),
-              Padding(
-                padding: const EdgeInsets.all(15.0),
-                child: TextButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => Iwant()),
+                );
+              },
+            ),
+            title: const Text('Aphasia', style: TextStyle(color: Colors.black)),
+            actions: <Widget>[
+              CircleAvatar(
+                radius: 30,
+                backgroundColor: Colors.red[900],
+                child: IconButton(
+                  icon: const Icon(
+                    Icons.warning_rounded,
+                    color: Colors.white,
+                  ),
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => Favorite()),
+                      MaterialPageRoute(builder: (context) => Help()),
                     );
                   },
-                  child: Text('รายการโปรด',
-                      style: TextStyle(color: Colors.black, fontSize: 20)),
                 ),
               ),
             ],
+            backgroundColor: Colors.white,
+          ),
+          body: SingleChildScrollView(
+            padding: EdgeInsets.only(left: 20, right: 20, top: 40, bottom: 20),
+            child: Center(
+              child: Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(15.0),
+                        child: Image.network(
+                            'https://firebasestorage.googleapis.com/v0/b/aphasiatalk-169dd.appspot.com/o/Iwant%2Fnoimg.png?alt=media&token=f062776f-34b7-44bd-bbea-43cf0bdb9652',
+                            width: 300,
+                            height: 300),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      Text('ฉันต้องการกิน' + args.salads_foods,
+                          style: TextStyle(fontSize: 25, color: Colors.black)),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          primary: Colors.teal[900],
+                          onPrimary: Colors.white,
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 30, vertical: 20),
+                          textStyle: TextStyle(fontSize: 20),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                        ),
+                        child: Text(
+                          'อ่าน',
+                          style: TextStyle(
+                            fontSize: 20,
+                          ),
+                        ),
+                        onPressed: () {
+                          tts.speak('ฉันต้องการกิน' + args.salads_foods);
+                        },
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        primary: isfav ? Colors.grey : Colors.yellowAccent[700],
+                        onPrimary: Colors.white,
+                        padding:
+                        EdgeInsets.symmetric(horizontal: 30, vertical: 20),
+                        textStyle: TextStyle(fontSize: 20),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                      ),
+                      child: isfav ? Text("นำออกจากรายการโปรด", style: TextStyle(fontSize: 20,),) : Text("เพิ่มในรายการโปรด", style: TextStyle(fontSize: 20,),),
+                      onPressed: () {
+                        setState(() {
+                          isfav = !isfav;
+                        },);
+                        if (isfav == true) {
+                          var img = args.salads_pic;
+                          var message = 'ฉันต้องการกิน' + args.salads_foods;
+
+                          //เตรียมข้อมูล
+                          WantSaved favor = WantSaved(image: img, message: message);
+
+                          //เรียก provider
+                          var provider = Provider.of<WantFavProvider>(context,listen: false);
+                          provider.addFavorite(favor);
+                        } else {
+                          var deleteImg = args.salads_pic;
+                          var delete = 'ฉันต้องการกิน' + args.salads_foods;
+
+                          //prepare data
+                          WantSaved favor = WantSaved(image: deleteImg,message: delete);
+
+                          var provider = Provider.of<WantFavProvider>(context,listen: false);
+                          provider.delete(favor);
+
+                          print("deleted");
+                        }
+                      },
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
-      ),
-    );
+          bottomNavigationBar: BottomAppBar(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.all(15.0),
+                  child: TextButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => Home()),
+                      );
+                    },
+                    child: Text('เมนูหลัก',
+                        style: TextStyle(color: Colors.black, fontSize: 20)),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(15.0),
+                  child: TextButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => Favorite()),
+                      );
+                    },
+                    child: Text('รายการโปรด',
+                        style: TextStyle(color: Colors.black, fontSize: 20)),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      );
+    }
   }
 }
