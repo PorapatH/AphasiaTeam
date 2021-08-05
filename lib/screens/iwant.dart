@@ -16,6 +16,8 @@ import 'package:intern/screens/iwant_read.dart';
 import 'package:intern/screens/iwant_shopping.dart';
 import 'package:intern/screens/iwant_watch.dart';
 import 'package:provider/provider.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+
 
 class Iwant extends StatefulWidget {
   const Iwant({Key key}) : super(key: key);
@@ -92,7 +94,7 @@ class _IwantState extends State<Iwant> {
         padding: const EdgeInsets.only(top: 12, bottom: 12),
         child: Row(
           children: [
-            picverb1 != null ? Image.network(picverb1) : Container(),
+            picverb1 != null ? Image.network((picverb1)) : Container(),
             picverb2 != null ? Image.network(picverb2) : Container()
           ],
         ),
