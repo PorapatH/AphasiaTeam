@@ -294,7 +294,8 @@ class _IwashoppingWashingTtsState extends State<IwashoppingWashingTts> {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
-                      Text('ฉันต้องการซื้อ' + args.washing,
+                      Text('ฉันต้องการ\nซื้อ' + args.washing,
+                          textAlign: TextAlign.center,
                           style: TextStyle(fontSize: 25, color: Colors.black)),
                     ],
                   ),
@@ -497,7 +498,8 @@ class _IwashoppingWashingTtsState extends State<IwashoppingWashingTts> {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
-                      Text('ฉันต้องการซื้อ' + args.washing,
+                      Text('ฉันต้องการ\nซื้อ' + args.washing,
+                          textAlign: TextAlign.center,
                           style: TextStyle(fontSize: 25, color: Colors.black)),
                     ],
                   ),

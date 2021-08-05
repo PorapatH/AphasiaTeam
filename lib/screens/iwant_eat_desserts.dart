@@ -13,12 +13,12 @@ import 'package:intern/screens/iwant.dart';
 import 'package:intern/screens/iwant_eat.dart';
 import 'package:provider/provider.dart';
 
-class WantEatDesserts extends StatefulWidget{
-@override
+class WantEatDesserts extends StatefulWidget {
+  @override
   _WantEatDessertsState createState() => _WantEatDessertsState();
 }
-class _WantEatDessertsState extends State<WantEatDesserts>{
 
+class _WantEatDessertsState extends State<WantEatDesserts> {
   List<IwantModel> iwantModels = [];
   @override
   void initState() {
@@ -82,7 +82,6 @@ class _WantEatDessertsState extends State<WantEatDesserts>{
     }
   }
 
-
   Widget showText(int index) {
     String iwsweet = iwantModels[index].desserts_foods;
 
@@ -92,7 +91,7 @@ class _WantEatDessertsState extends State<WantEatDesserts>{
       child: Column(
         children: [
           Text(
-            iwsweet?? '',
+            iwsweet ?? '',
             textAlign: TextAlign.center,
             style: TextStyle(color: Colors.white, fontSize: 24),
           ),
@@ -229,8 +228,7 @@ class _IwantTtsState extends State<IwantTts> {
   Widget build(BuildContext context) {
     final FlutterTts tts = FlutterTts();
 
-    final args =
-        ModalRoute.of(context).settings.arguments as IwantModel;
+    final args = ModalRoute.of(context).settings.arguments as IwantModel;
 
     String pic = args.desserts_pic;
 
@@ -295,7 +293,8 @@ class _IwantTtsState extends State<IwantTts> {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
-                      Text('ฉันต้องการกิน' + args.desserts_foods,
+                      Text('ฉันต้องการ\nกิน' + args.desserts_foods,
+                          textAlign: TextAlign.center,
                           style: TextStyle(fontSize: 25, color: Colors.black)),
                     ],
                   ),
@@ -336,52 +335,71 @@ class _IwantTtsState extends State<IwantTts> {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
-                     ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        primary: isfav ? Colors.grey : Colors.yellowAccent[700],
-                        onPrimary: Colors.white,
-                        padding:
-                        EdgeInsets.symmetric(horizontal: 30, vertical: 20),
-                        textStyle: TextStyle(fontSize: 20),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          primary:
+                              isfav ? Colors.grey : Colors.yellowAccent[700],
+                          onPrimary: Colors.white,
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 30, vertical: 20),
+                          textStyle: TextStyle(fontSize: 20),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
                         ),
+                        child: isfav
+                            ? Text(
+                                "นำออกจากรายการโปรด",
+                                style: TextStyle(
+                                  fontSize: 20,
+                                ),
+                              )
+                            : Text(
+                                "เพิ่มในรายการโปรด",
+                                style: TextStyle(
+                                  fontSize: 20,
+                                ),
+                              ),
+                        onPressed: () {
+                          setState(
+                            () {
+                              isfav = !isfav;
+                            },
+                          );
+                          if (isfav == true) {
+                            var img = args.desserts_pic;
+                            var message = 'ฉันต้องการกิน' + args.desserts_foods;
+
+                            //เตรียมข้อมูล
+                            WantSaved favor =
+                                WantSaved(image: img, message: message);
+
+                            //เรียก provider
+                            var provider = Provider.of<WantFavProvider>(context,
+                                listen: false);
+                            provider.addFavorite(favor);
+                          } else {
+                            var deleteImg = args.desserts_pic;
+                            var delete = 'ฉันต้องการกิน' + args.desserts_foods;
+
+                            //prepare data
+                            WantSaved favor =
+                                WantSaved(image: deleteImg, message: delete);
+
+                            var provider = Provider.of<WantFavProvider>(context,
+                                listen: false);
+                            provider.delete(favor);
+
+                            print("deleted");
+                          }
+                        },
                       ),
-                      child: isfav ? Text("นำออกจากรายการโปรด", style: TextStyle(fontSize: 20,),) : Text("เพิ่มในรายการโปรด", style: TextStyle(fontSize: 20,),),
-                      onPressed: () {
-                        setState(() {
-                          isfav = !isfav;
-                        },);
-                        if (isfav == true) {
-                          var img = args.desserts_pic;
-                          var message = 'ฉันต้องการกิน' + args.desserts_foods;
-
-                          //เตรียมข้อมูล
-                          WantSaved favor = WantSaved(image: img, message: message);
-
-                          //เรียก provider
-                          var provider = Provider.of<WantFavProvider>(context,listen: false);
-                          provider.addFavorite(favor);
-                        } else {
-                          var deleteImg = args.desserts_pic;
-                          var delete = 'ฉันต้องการกิน' + args.desserts_foods;
-
-                          //prepare data
-                          WantSaved favor = WantSaved(image: deleteImg,message: delete);
-
-                          var provider = Provider.of<WantFavProvider>(context,listen: false);
-                          provider.delete(favor);
-
-                          print("deleted");
-                        }
-                      },
-                    ),
-                  ],
-                ),
-              ],
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
-        ),
           bottomNavigationBar: BottomAppBar(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -479,7 +497,8 @@ class _IwantTtsState extends State<IwantTts> {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
-                      Text('ฉันต้องการกิน' + args.desserts_foods,
+                      Text('ฉันต้องการ\nกิน' + args.desserts_foods,
+                          textAlign: TextAlign.center,
                           style: TextStyle(fontSize: 25, color: Colors.black)),
                     ],
                   ),
@@ -521,51 +540,70 @@ class _IwantTtsState extends State<IwantTts> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
                       ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        primary: isfav ? Colors.grey : Colors.yellowAccent[700],
-                        onPrimary: Colors.white,
-                        padding:
-                        EdgeInsets.symmetric(horizontal: 30, vertical: 20),
-                        textStyle: TextStyle(fontSize: 20),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
+                        style: ElevatedButton.styleFrom(
+                          primary:
+                              isfav ? Colors.grey : Colors.yellowAccent[700],
+                          onPrimary: Colors.white,
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 30, vertical: 20),
+                          textStyle: TextStyle(fontSize: 20),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
                         ),
+                        child: isfav
+                            ? Text(
+                                "นำออกจากรายการโปรด",
+                                style: TextStyle(
+                                  fontSize: 20,
+                                ),
+                              )
+                            : Text(
+                                "เพิ่มในรายการโปรด",
+                                style: TextStyle(
+                                  fontSize: 20,
+                                ),
+                              ),
+                        onPressed: () {
+                          setState(
+                            () {
+                              isfav = !isfav;
+                            },
+                          );
+                          if (isfav == true) {
+                            var img = imagesrc;
+                            var message = 'ฉันต้องการกิน' + args.desserts_foods;
+
+                            //เตรียมข้อมูล
+                            WantSaved favor =
+                                WantSaved(image: img, message: message);
+
+                            //เรียก provider
+                            var provider = Provider.of<WantFavProvider>(context,
+                                listen: false);
+                            provider.addFavorite(favor);
+                          } else {
+                            var deleteImg = imagesrc;
+                            var delete = 'ฉันต้องการกิน' + args.desserts_foods;
+
+                            //prepare data
+                            WantSaved favor =
+                                WantSaved(image: deleteImg, message: delete);
+
+                            var provider = Provider.of<WantFavProvider>(context,
+                                listen: false);
+                            provider.delete(favor);
+
+                            print("deleted");
+                          }
+                        },
                       ),
-                      child: isfav ? Text("นำออกจากรายการโปรด", style: TextStyle(fontSize: 20,),) : Text("เพิ่มในรายการโปรด", style: TextStyle(fontSize: 20,),),
-                      onPressed: () {
-                        setState(() {
-                          isfav = !isfav;
-                        },);
-                        if (isfav == true) {
-                          var img = imagesrc;
-                          var message = 'ฉันต้องการกิน' + args.desserts_foods;
-
-                          //เตรียมข้อมูล
-                          WantSaved favor = WantSaved(image: img, message: message);
-
-                          //เรียก provider
-                          var provider = Provider.of<WantFavProvider>(context,listen: false);
-                          provider.addFavorite(favor);
-                        } else {
-                          var deleteImg = imagesrc;
-                          var delete = 'ฉันต้องการกิน' + args.desserts_foods;
-
-                          //prepare data
-                          WantSaved favor = WantSaved(image: deleteImg,message: delete);
-
-                          var provider = Provider.of<WantFavProvider>(context,listen: false);
-                          provider.delete(favor);
-
-                          print("deleted");
-                        }
-                      },
-                    ),
-                  ],
-                ),
-              ],
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
-        ),
           bottomNavigationBar: BottomAppBar(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,

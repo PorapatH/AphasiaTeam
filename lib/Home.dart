@@ -13,7 +13,7 @@ class Home extends StatelessWidget {
   final FlutterTts tts = FlutterTts();
   final messageController = TextEditingController();
 
-  Home(){
+  Home() {
     tts.setLanguage('th');
   }
 
@@ -67,47 +67,59 @@ class Home extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
-                   ElevatedButton(
+                    ElevatedButton(
                       style: ElevatedButton.styleFrom(
                         primary: Colors.teal[900],
                         onPrimary: Colors.white,
                         padding:
-                            EdgeInsets.symmetric(horizontal: 50, vertical: 20),
+                            EdgeInsets.symmetric(horizontal: 40, vertical: 20),
                         textStyle: TextStyle(fontSize: 20),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12),
                         ),
                       ),
-                      child: Text('อ่าน', style: TextStyle(fontSize: 20,),),
+                      child: Text(
+                        'อ่าน',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 20,
+                        ),
+                      ),
                       onPressed: () {
                         tts.speak(messageController.text);
                       },
                     ),
-                   ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        primary: Colors.yellowAccent[700],
-                        onPrimary: Colors.white,
-                        padding:
-                            EdgeInsets.symmetric(horizontal: 30, vertical: 20),
-                        textStyle: TextStyle(fontSize: 20),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
+                    ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          primary: Colors.yellowAccent[700],
+                          onPrimary: Colors.white,
+                          padding:
+                              EdgeInsets.symmetric(horizontal: 15, vertical: 20),
+                          textStyle: TextStyle(fontSize: 20),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
                         ),
+                        child: Text(
+                          'เพิ่มในรายการโปรด',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: 20,
+                          ),
+                        ),
+                        onPressed: () {
+                          var message = messageController.text;
+                    
+                          //เตรียมข้อมูล
+                          Saved favor = Saved(message: message);
+                    
+                          //เรียก provider
+                          var provider =
+                              Provider.of<FavProvider>(context, listen: false);
+                          provider.addFavorite(favor);
+                          messageController.clear();
+                        },
                       ),
-                      child: Text('รายการโปรด', style: TextStyle(fontSize: 20,),),
-                      onPressed: () {
-                        var message = messageController.text;
-
-                        //เตรียมข้อมูล
-                        Saved favor = Saved(message: message);
-
-                        //เรียก provider
-                        var provider = Provider.of<FavProvider>(context,listen: false);
-                        provider.addFavorite(favor);
-                        messageController.clear();
-
-                      },
-                    ),
                   ],
                 ),
                 SizedBox(
