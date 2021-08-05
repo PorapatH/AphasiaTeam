@@ -7,13 +7,12 @@ import 'package:intern/models/FeelSaved.dart';
 import 'package:intern/provider/FeelProvider.dart';
 import 'package:provider/provider.dart';
 
-class FavFeel extends StatefulWidget{
+class FavFeel extends StatefulWidget {
   @override
   _FavFeelState createState() => _FavFeelState();
 }
 class _FavFeelState extends State<FavFeel> {
-
-  void initState(){
+  void initState() {
     super.initState();
     Provider.of<FeelFavProvider>(context, listen: false).initData();
   }
@@ -86,11 +85,12 @@ class _FavFeelState extends State<FavFeel> {
                           var deleteImg = data.image;
 
                           //prepare data
-                          FeelSaved favor = FeelSaved(image: deleteImg,message: delete);
+                          FeelSaved favor =
+                              FeelSaved(image: deleteImg, message: delete);
 
-                          var provider = Provider.of<FeelFavProvider>(context,listen: false);
+                          var provider = Provider.of<FeelFavProvider>(context,
+                              listen: false);
                           provider.delete(favor);
-
                         },
                         icon: const Icon(
                           Icons.delete_forever,

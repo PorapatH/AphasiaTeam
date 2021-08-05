@@ -55,15 +55,32 @@ class _IfpainState extends State<Ifpain> {
   Widget showImage(int index) {
     String picpain = ifeelModels[index].painpic;
 
-    return Container(
-      width: MediaQuery.of(context).size.width * 0.4,
-      height: MediaQuery.of(context).size.width * 0.4,
-      child: Padding(
-        padding: const EdgeInsets.only(top: 12, bottom: 12),
-        child: Row(
-        children: [picpain != null ? Image.network(picpain) : Container()],
-      ),)
-    );
+    if (picpain != null) {
+      return Container(
+          width: MediaQuery.of(context).size.width * 0.4,
+          height: MediaQuery.of(context).size.width * 0.4,
+          child: Padding(
+            padding: const EdgeInsets.only(top: 12, bottom: 12),
+            child: Row(
+              children: [
+                picpain != null ? Image.network(picpain) : Container()
+              ],
+            ),
+          ));
+    } else if (picpain == null) {
+      return Container(
+          width: MediaQuery.of(context).size.width * 0.4,
+          height: MediaQuery.of(context).size.width * 0.4,
+          child: Padding(
+            padding: const EdgeInsets.only(top: 12, bottom: 12),
+            child: Row(
+              children: [
+                Image.network(
+                    'https://firebasestorage.googleapis.com/v0/b/aphasiatalk-169dd.appspot.com/o/Iwant%2Fnoimg.png?alt=media&token=f062776f-34b7-44bd-bbea-43cf0bdb9652'),
+              ],
+            ),
+          ));
+    }
   }
 
   Widget showText(int index) {
@@ -408,6 +425,8 @@ class _IfpainTtsState extends State<IfpainTts> {
         ),
       );
     } else if (pic == null) {
+      var imagesrc =
+          'https://firebasestorage.googleapis.com/v0/b/aphasiatalk-169dd.appspot.com/o/Iwant%2Fnoimg.png?alt=media&token=f062776f-34b7-44bd-bbea-43cf0bdb9652';
       return MaterialApp(
         home: Scaffold(
           appBar: new AppBar(
@@ -456,10 +475,7 @@ class _IfpainTtsState extends State<IfpainTts> {
                     children: <Widget>[
                       ClipRRect(
                         borderRadius: BorderRadius.circular(15.0),
-                        child: Image.network(
-                            'https://firebasestorage.googleapis.com/v0/b/aphasiatalk-169dd.appspot.com/o/Iwant%2Fnoimg.png?alt=media&token=f062776f-34b7-44bd-bbea-43cf0bdb9652',
-                            width: 300,
-                            height: 300),
+                        child: Image.network(imagesrc, width: 300, height: 300),
                       ),
                     ],
                   ),
@@ -528,7 +544,7 @@ class _IfpainTtsState extends State<IfpainTts> {
                           isfav = !isfav;
                         },);
                         if (isfav == true) {
-                          var img = args.painpic;
+                          var img = imagesrc;
                           var message = 'ฉันรู้สึกปวด' + args.pain;
 
                           //เตรียมข้อมูล
@@ -540,7 +556,7 @@ class _IfpainTtsState extends State<IfpainTts> {
                               context, listen: false);
                           provider.addFavorite(favor);
                         } else {
-                          var deleteImg = args.painpic;
+                          var deleteImg = imagesrc;
                           var delete = 'ฉันรู้สึกปวด' + args.pain;
 
                           //prepare data

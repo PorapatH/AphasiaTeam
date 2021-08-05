@@ -12,12 +12,12 @@ import 'package:intern/provider/WantProvider.dart';
 import 'package:intern/screens/iwant_shopping.dart';
 import 'package:provider/provider.dart';
 
-class WantShoppingWashing extends StatefulWidget{
-   @override
+class WantShoppingWashing extends StatefulWidget {
+  @override
   _WantShoppingWashingState createState() => _WantShoppingWashingState();
 }
-class _WantShoppingWashingState extends State<WantShoppingWashing>{
 
+class _WantShoppingWashingState extends State<WantShoppingWashing> {
   List<IwantModel> iwantModels = [];
   @override
   void initState() {
@@ -53,17 +53,34 @@ class _WantShoppingWashingState extends State<WantShoppingWashing>{
   Widget showImage(int index) {
     String picwashingsp = iwantModels[index].washing_pic;
 
-    return Container(
-      width: MediaQuery.of(context).size.width * 0.4,
-      height: MediaQuery.of(context).size.width * 0.4,
-      child: Padding(
-        padding: const EdgeInsets.only(top: 12, bottom: 12),
-        child: Row(
-        children: [
-          picwashingsp != null ? Image.network(picwashingsp) : Container(),
-        ],
-      ),)
-    );
+    if (picwashingsp != null) {
+      return Container(
+          width: MediaQuery.of(context).size.width * 0.4,
+          height: MediaQuery.of(context).size.width * 0.4,
+          child: Padding(
+            padding: const EdgeInsets.only(top: 12, bottom: 12),
+            child: Row(
+              children: [
+                picwashingsp != null
+                    ? Image.network(picwashingsp)
+                    : Container(),
+              ],
+            ),
+          ));
+    } else if (picwashingsp == null) {
+      return Container(
+          width: MediaQuery.of(context).size.width * 0.4,
+          height: MediaQuery.of(context).size.width * 0.4,
+          child: Padding(
+            padding: const EdgeInsets.only(top: 12, bottom: 12),
+            child: Row(
+              children: [
+                Image.network(
+                    'https://firebasestorage.googleapis.com/v0/b/aphasiatalk-169dd.appspot.com/o/Iwant%2Fnoimg.png?alt=media&token=f062776f-34b7-44bd-bbea-43cf0bdb9652'),
+              ],
+            ),
+          ));
+    }
   }
 
   Widget showText(int index) {
@@ -148,7 +165,8 @@ class _WantShoppingWashingState extends State<WantShoppingWashing>{
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (BuildContext context) => IwashoppingWashingTts(),
+                          builder: (BuildContext context) =>
+                              IwashoppingWashingTts(),
                           settings:
                               RouteSettings(arguments: iwantModels[index]),
                         ),
@@ -211,8 +229,7 @@ class _IwashoppingWashingTtsState extends State<IwashoppingWashingTts> {
   Widget build(BuildContext context) {
     final FlutterTts tts = FlutterTts();
 
-    final args =
-        ModalRoute.of(context).settings.arguments as IwantModel;
+    final args = ModalRoute.of(context).settings.arguments as IwantModel;
 
     String pic = args.washing_pic;
 
@@ -319,51 +336,70 @@ class _IwashoppingWashingTtsState extends State<IwashoppingWashingTts> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
                       ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        primary: isfav ? Colors.grey : Colors.yellowAccent[700],
-                        onPrimary: Colors.white,
-                        padding:
-                        EdgeInsets.symmetric(horizontal: 30, vertical: 20),
-                        textStyle: TextStyle(fontSize: 20),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
+                        style: ElevatedButton.styleFrom(
+                          primary:
+                              isfav ? Colors.grey : Colors.yellowAccent[700],
+                          onPrimary: Colors.white,
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 30, vertical: 20),
+                          textStyle: TextStyle(fontSize: 20),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
                         ),
+                        child: isfav
+                            ? Text(
+                                "นำออกจากรายการโปรด",
+                                style: TextStyle(
+                                  fontSize: 20,
+                                ),
+                              )
+                            : Text(
+                                "เพิ่มในรายการโปรด",
+                                style: TextStyle(
+                                  fontSize: 20,
+                                ),
+                              ),
+                        onPressed: () {
+                          setState(
+                            () {
+                              isfav = !isfav;
+                            },
+                          );
+                          if (isfav == true) {
+                            var img = args.washing_pic;
+                            var message = 'ฉันต้องการซื้อ' + args.washing;
+
+                            //เตรียมข้อมูล
+                            WantSaved favor =
+                                WantSaved(image: img, message: message);
+
+                            //เรียก provider
+                            var provider = Provider.of<WantFavProvider>(context,
+                                listen: false);
+                            provider.addFavorite(favor);
+                          } else {
+                            var deleteImg = args.washing_pic;
+                            var delete = 'ฉันต้องการซื้อ' + args.washing;
+
+                            //prepare data
+                            WantSaved favor =
+                                WantSaved(image: deleteImg, message: delete);
+
+                            var provider = Provider.of<WantFavProvider>(context,
+                                listen: false);
+                            provider.delete(favor);
+
+                            print("deleted");
+                          }
+                        },
                       ),
-                     child: isfav ? Text("นำออกจากรายการโปรด", style: TextStyle(fontSize: 20,),) : Text("เพิ่มในรายการโปรด", style: TextStyle(fontSize: 20,),),
-                      onPressed: () {
-                        setState(() {
-                          isfav = !isfav;
-                        },);
-                        if (isfav == true) {
-                          var img = args.washing_pic;
-                          var message = 'ฉันต้องการซื้อ' + args.washing;
-
-                          //เตรียมข้อมูล
-                          WantSaved favor = WantSaved(image: img, message: message);
-
-                          //เรียก provider
-                          var provider = Provider.of<WantFavProvider>(context,listen: false);
-                          provider.addFavorite(favor);
-                        } else {
-                          var deleteImg = args.washing_pic;
-                          var delete = 'ฉันต้องการซื้อ' + args.washing;
-
-                          //prepare data
-                          WantSaved favor = WantSaved(image: deleteImg,message: delete);
-
-                          var provider = Provider.of<WantFavProvider>(context,listen: false);
-                          provider.delete(favor);
-
-                          print("deleted");
-                        }
-                      },
-                    ),
-                  ],
-                ),
-              ],
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
-        ),
           bottomNavigationBar: BottomAppBar(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -400,6 +436,8 @@ class _IwashoppingWashingTtsState extends State<IwashoppingWashingTts> {
         ),
       );
     } else if (pic == null) {
+      var imagesrc =
+          'https://firebasestorage.googleapis.com/v0/b/aphasiatalk-169dd.appspot.com/o/Iwant%2Fnoimg.png?alt=media&token=f062776f-34b7-44bd-bbea-43cf0bdb9652';
       return MaterialApp(
         home: Scaffold(
           appBar: new AppBar(
@@ -448,10 +486,7 @@ class _IwashoppingWashingTtsState extends State<IwashoppingWashingTts> {
                     children: <Widget>[
                       ClipRRect(
                         borderRadius: BorderRadius.circular(15.0),
-                        child: Image.network(
-                            'https://firebasestorage.googleapis.com/v0/b/aphasiatalk-169dd.appspot.com/o/Iwant%2Fnoimg.png?alt=media&token=f062776f-34b7-44bd-bbea-43cf0bdb9652',
-                            width: 300,
-                            height: 300),
+                        child: Image.network(imagesrc, width: 300, height: 300),
                       ),
                     ],
                   ),
@@ -504,51 +539,70 @@ class _IwashoppingWashingTtsState extends State<IwashoppingWashingTts> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
                       ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        primary: isfav ? Colors.grey : Colors.yellowAccent[700],
-                        onPrimary: Colors.white,
-                        padding:
-                        EdgeInsets.symmetric(horizontal: 30, vertical: 20),
-                        textStyle: TextStyle(fontSize: 20),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
+                        style: ElevatedButton.styleFrom(
+                          primary:
+                              isfav ? Colors.grey : Colors.yellowAccent[700],
+                          onPrimary: Colors.white,
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 30, vertical: 20),
+                          textStyle: TextStyle(fontSize: 20),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
                         ),
+                        child: isfav
+                            ? Text(
+                                "นำออกจากรายการโปรด",
+                                style: TextStyle(
+                                  fontSize: 20,
+                                ),
+                              )
+                            : Text(
+                                "เพิ่มในรายการโปรด",
+                                style: TextStyle(
+                                  fontSize: 20,
+                                ),
+                              ),
+                        onPressed: () {
+                          setState(
+                            () {
+                              isfav = !isfav;
+                            },
+                          );
+                          if (isfav == true) {
+                            var img = imagesrc;
+                            var message = 'ฉันต้องการซื้อ' + args.washing;
+
+                            //เตรียมข้อมูล
+                            WantSaved favor =
+                                WantSaved(image: img, message: message);
+
+                            //เรียก provider
+                            var provider = Provider.of<WantFavProvider>(context,
+                                listen: false);
+                            provider.addFavorite(favor);
+                          } else {
+                            var deleteImg = imagesrc;
+                            var delete = 'ฉันต้องการซื้อ' + args.washing;
+
+                            //prepare data
+                            WantSaved favor =
+                                WantSaved(image: deleteImg, message: delete);
+
+                            var provider = Provider.of<WantFavProvider>(context,
+                                listen: false);
+                            provider.delete(favor);
+
+                            print("deleted");
+                          }
+                        },
                       ),
-                     child: isfav ? Text("นำออกจากรายการโปรด", style: TextStyle(fontSize: 20,),) : Text("เพิ่มในรายการโปรด", style: TextStyle(fontSize: 20,),),
-                      onPressed: () {
-                        setState(() {
-                          isfav = !isfav;
-                        },);
-                        if (isfav == true) {
-                          var img = args.washing_pic;
-                          var message = 'ฉันต้องการซื้อ' + args.washing;
-
-                          //เตรียมข้อมูล
-                          WantSaved favor = WantSaved(image: img, message: message);
-
-                          //เรียก provider
-                          var provider = Provider.of<WantFavProvider>(context,listen: false);
-                          provider.addFavorite(favor);
-                        } else {
-                          var deleteImg = args.washing_pic;
-                          var delete = 'ฉันต้องการซื้อ' + args.washing;
-
-                          //prepare data
-                          WantSaved favor = WantSaved(image: deleteImg,message: delete);
-
-                          var provider = Provider.of<WantFavProvider>(context,listen: false);
-                          provider.delete(favor);
-
-                          print("deleted");
-                        }
-                      },
-                    ),
-                  ],
-                ),
-              ],
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
-        ),
           bottomNavigationBar: BottomAppBar(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
