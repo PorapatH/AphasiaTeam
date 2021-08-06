@@ -67,6 +67,7 @@ class _HelpState extends State<Help> {
           padding: EdgeInsets.only(left: 20, right: 20, top: 40, bottom: 20),
           child: Center(
             child: Column(
+              mainAxisSize: MainAxisSize.min,
               children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -97,34 +98,6 @@ class _HelpState extends State<Help> {
                         child: Text('ขอความช่วยเหลือ', style: TextStyle(fontSize: 20,),),
                         onPressed: _sos,
                       ),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 60,),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    Image.asset('assets/hospital.png',width:200,height:200),
-                  ],
-                ),
-                SizedBox(height: 10,),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          primary: Colors.red[900],
-                          onPrimary: Colors.white,
-                          padding: EdgeInsets.symmetric(horizontal: 30, vertical: 20),
-                          textStyle: TextStyle(fontSize: 20),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                        ),
-                        child: Text('ติดต่อโรงพยาบาล', style: TextStyle(fontSize: 20,),),
-                        onPressed: (){}//_sendSMS,
                     ),
                   ],
                 ),

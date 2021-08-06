@@ -10,12 +10,12 @@ import 'package:intern/provider/provider.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_gradients/flutter_gradients.dart';
 
-class Home extends StatelessWidget {
+class TestHomeUI extends StatelessWidget {
   final FlutterTts tts = FlutterTts();
   final messageController = TextEditingController();
   final formKey = GlobalKey<FormState>();
 
-  Home() {
+  TestHomeUI() {
     tts.setLanguage('th');
   }
 

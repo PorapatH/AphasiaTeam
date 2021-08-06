@@ -174,7 +174,7 @@ class Favorite extends StatelessWidget {
                       MaterialPageRoute(builder: (context) => Favorite()),
                     );
                   },
-                  child: Text('รายการโปรด', style: TextStyle(color: Colors.black, fontSize: 20)),
+                  child: Text('รายการโปรด', style: TextStyle(color: Colors.teal[900], fontSize: 20, fontWeight: FontWeight.bold)),
                 ),
               ),
             ],

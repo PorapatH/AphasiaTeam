@@ -126,7 +126,7 @@ class _FavMyState extends State<FavMy> {
                     );
                   },
                   child: Text('รายการโปรด',
-                      style: TextStyle(color: Colors.black, fontSize: 20)),
+                      style: TextStyle(color: Colors.teal[900], fontSize: 20, fontWeight: FontWeight.bold)),
                 ),
               ),
             ],
