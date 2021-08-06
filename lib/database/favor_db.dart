@@ -32,8 +32,13 @@ class FavDB {
     var db = await this.openDatabase();
     var store = intMapStoreFactory.store("Message");
 
-    //json
-    var keyID = store.add(db, {"Message": favor.message});
+    var filter = Filter.equals("Message", favor.message);
+    var numrec = await store.count(db, filter: filter);
+    var keyID;
+    if (numrec == 0) {
+      //json
+      keyID = store.add(db, {"Message": favor.message});
+    }
     db.close();
 
     return keyID;

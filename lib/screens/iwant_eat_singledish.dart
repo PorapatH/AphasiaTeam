@@ -295,7 +295,8 @@ class _IwantTtsState extends State<IwantTts> {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
-                      Text('ฉันต้องการกิน' + args.singledish_foods,
+                      Text('ฉันต้องการ\nกิน' + args.singledish_foods,
+                          textAlign: TextAlign.center,
                           style: TextStyle(fontSize: 25, color: Colors.black)),
                     ],
                   ),
@@ -500,7 +501,8 @@ class _IwantTtsState extends State<IwantTts> {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
-                      Text('ฉันต้องการกิน' + args.singledish_foods,
+                      Text('ฉันต้องการ\nกิน' + args.singledish_foods,
+                          textAlign: TextAlign.center,
                           style: TextStyle(fontSize: 25, color: Colors.black)),
                     ],
                   ),

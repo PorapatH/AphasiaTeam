@@ -295,7 +295,8 @@ class _IwshoppingPersonalTtsState extends State<IwshoppingPersonalTts> {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
-                      Text('ฉันต้องการซื้อ' + args.personal,
+                      Text('ฉันต้องการ\nซื้อ' + args.personal,
+                      textAlign: TextAlign.center,
                           style: TextStyle(fontSize: 25, color: Colors.black)),
                     ],
                   ),
@@ -499,7 +500,8 @@ class _IwshoppingPersonalTtsState extends State<IwshoppingPersonalTts> {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
-                      Text('ฉันต้องการซื้อ' + args.personal,
+                      Text('ฉันต้องการ\nซื้อ' + args.personal,
+                      textAlign: TextAlign.center,
                           style: TextStyle(fontSize: 25, color: Colors.black)),
                     ],
                   ),

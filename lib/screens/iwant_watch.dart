@@ -290,7 +290,8 @@ class _IwantTtsState extends State<IwantTts> {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
-                      Text('ฉันต้องการดู' + args.watchObj,
+                      Text('ฉันต้องการ\nดู' + args.watchObj,
+                          textAlign: TextAlign.center,
                           style: TextStyle(fontSize: 25, color: Colors.black)),
                     ],
                   ),
@@ -493,7 +494,8 @@ class _IwantTtsState extends State<IwantTts> {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
-                      Text('ฉันต้องการดู' + args.watchObj,
+                      Text('ฉันต้องการ\nดู' + args.watchObj,
+                          textAlign: TextAlign.center,
                           style: TextStyle(fontSize: 25, color: Colors.black)),
                     ],
                   ),

@@ -296,7 +296,8 @@ class _IwshoppingMedicineTtsState extends State<IwshoppingMedicineTts> {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
-                      Text('ฉันต้องการซื้อ\n' + args.medicine,
+                      Text('ฉันต้องการ\nซื้อ' + args.medicine,
+                          textAlign: TextAlign.center,
                           style: TextStyle(fontSize: 25, color: Colors.black)),
                     ],
                   ),
@@ -500,7 +501,8 @@ class _IwshoppingMedicineTtsState extends State<IwshoppingMedicineTts> {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
-                      Text('ฉันต้องการซื้อ\n' + args.medicine,
+                      Text('ฉันต้องการ\nซื้อ' + args.medicine,
+                          textAlign: TextAlign.center,
                           style: TextStyle(fontSize: 25, color: Colors.black)),
                     ],
                   ),
