@@ -76,7 +76,6 @@ class _HelpState extends State<Help> {
                           tts.speak("ช่วยด้วย");
                         },
                       ),
-                    ),
                   ],
                 ),
               ],

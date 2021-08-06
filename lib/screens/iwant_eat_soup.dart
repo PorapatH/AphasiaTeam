@@ -323,7 +323,7 @@ class _IwantTtsState extends State<IwantTts> {
                           ),
                         ),
                         onPressed: () {
-                          tts.speak('ฉันต้องการกิน' + args.soup_pic);
+                          tts.speak('ฉันต้องการกิน' + args.soup_foods);
                         },
                       ),
                     ],
@@ -527,7 +527,7 @@ class _IwantTtsState extends State<IwantTts> {
                           ),
                         ),
                         onPressed: () {
-                          tts.speak('ฉันต้องการกิน' + args.soup_pic);
+                          tts.speak('ฉันต้องการกิน' + args.soup_foods);
                         },
                       ),
                     ],

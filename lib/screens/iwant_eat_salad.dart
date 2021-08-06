@@ -245,7 +245,7 @@ class _IwantTtsState extends State<IwantTts> {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => Iwant()),
+                  MaterialPageRoute(builder: (context) => WantEatSalads()),
                 );
               },
             ),
