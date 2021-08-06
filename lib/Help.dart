@@ -47,6 +47,7 @@ class _HelpState extends State<Help> {
           padding: EdgeInsets.only(left: 20, right: 20, top: 40, bottom: 20),
           child: Center(
             child: Column(
+              mainAxisSize: MainAxisSize.min,
               children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -75,6 +76,7 @@ class _HelpState extends State<Help> {
                           tts.speak("ช่วยด้วย");
                         },
                       ),
+                    ),
                   ],
                 ),
               ],
