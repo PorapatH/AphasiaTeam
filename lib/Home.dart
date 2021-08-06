@@ -81,7 +81,7 @@ class Home extends StatelessWidget {
                           primary: Colors.teal[900],
                           onPrimary: Colors.white,
                           padding:
-                              EdgeInsets.symmetric(horizontal: 40, vertical: 20),
+                              EdgeInsets.symmetric(horizontal: 50, vertical: 20),
                           textStyle: TextStyle(fontSize: 20),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(12),
@@ -105,7 +105,7 @@ class Home extends StatelessWidget {
                             primary: Colors.yellowAccent[700],
                             onPrimary: Colors.white,
                             padding:
-                                EdgeInsets.symmetric(horizontal: 15, vertical: 20),
+                                EdgeInsets.symmetric(horizontal: 10, vertical: 20),
                             textStyle: TextStyle(fontSize: 20),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(12),

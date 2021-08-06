@@ -31,8 +31,13 @@ class FeelFavDB {
     //by go to db first
     var db = await this.openDatabase();
     var store = intMapStoreFactory.store("Feel");
-    
-    var keyID = store.add(db, {"feelimg": favor.image, "feelmessage": favor.message});
+
+    var filter = Filter.equals("feelmessage", favor.message);
+    var numrec = await store.count(db, filter: filter);
+    var keyID;
+    if (numrec == 0) {
+      keyID = store.add(db, {"feelimg": favor.image, "feelmessage": favor.message});
+    }
 
     db.close();
 

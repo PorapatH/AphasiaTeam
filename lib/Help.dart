@@ -1,6 +1,7 @@
 import 'dart:ui';
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter_tts/flutter_tts.dart';
 import 'package:holding_gesture/holding_gesture.dart';
 import "package:flutter_sms/flutter_sms.dart";
 import 'package:intern/Favorite.dart';
@@ -12,31 +13,10 @@ class Help extends StatefulWidget {
 }
 
 class _HelpState extends State<Help> {
-  // String message = "SOS!";
-  // List<String> recipents = [""]; //emergency call or hospital phone number
-  int _counter = 0;
+  final FlutterTts tts = FlutterTts();
 
-  void _sos() {
-    if (mounted) {
-      setState(() async {
-        _counter += 1;
-        print(_counter);
-        //เพิ่มฟังก์ชั่นสำหรับ เสียงขอความช่วยเหลือ
-      });
-    }
-  }
-
-  // void _sendSMS(String message, List<String> recipents) async {
-  //   String _result = await sendSMS(message: message, recipients: recipents)
-  //       .catchError((onError) {
-  //     print(onError);
-  //   });
-  //   print(_result);
-  // }
-
-  @override
-  void initState() {
-    super.initState();
+  Help(){
+    tts.setLanguage('th');
   }
 
   @override
@@ -80,11 +60,7 @@ class _HelpState extends State<Help> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
-                    HoldDetector(
-                      onHold: _sos,
-                      holdTimeout: Duration(milliseconds: 200),
-                      enableHapticFeedback: true,
-                      child: ElevatedButton(
+                      ElevatedButton(
                         style: ElevatedButton.styleFrom(
                           primary: Colors.red[900],
                           onPrimary: Colors.white,
@@ -95,37 +71,10 @@ class _HelpState extends State<Help> {
                           ),
                         ),
                         child: Text('ขอความช่วยเหลือ', style: TextStyle(fontSize: 20,),),
-                        onPressed: _sos,
+                        onPressed: (){
+                          tts.speak("ช่วยด้วย");
+                        },
                       ),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 60,),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    Image.asset('assets/hospital.png',width:200,height:200),
-                  ],
-                ),
-                SizedBox(height: 10,),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          primary: Colors.red[900],
-                          onPrimary: Colors.white,
-                          padding: EdgeInsets.symmetric(horizontal: 30, vertical: 20),
-                          textStyle: TextStyle(fontSize: 20),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                        ),
-                        child: Text('ติดต่อโรงพยาบาล', style: TextStyle(fontSize: 20,),),
-                        onPressed: (){}//_sendSMS,
-                    ),
                   ],
                 ),
               ],
